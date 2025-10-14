@@ -2,6 +2,20 @@
   min-height: 100vh;
   position: relative;
   background: linear-gradient(130deg, #221B42 20%, #67209d 60%, #221B42);
+  overflow: hidden;
+}
+
+.Home::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(red 1px, transparent 1px),
+    radial-gradient(white 1px, transparent 1px);
+  background-size: 100px 100px, 80px 80px;
+  background-position: 0 0, 50px 50px;
+  opacity: 0.25;
+  z-index: 0;
 }
 
 .backgroundCircles {
