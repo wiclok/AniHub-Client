@@ -1,0 +1,60 @@
+.StatsSection {
+  width: 60%;
+  min-height: 25vh;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+/* 📱 Responsive breakpoints */
+
+/* Pantallas grandes (hasta 1200px) */
+@media (max-width: 1200px) {
+  .StatsSection {
+    width: 70%;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 1rem;
+  }
+}
+
+/* Tablets (hasta 992px) */
+@media (max-width: 992px) {
+  .StatsSection {
+    width: 80%;
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(250px, auto));
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  /* 🔹 Centrar el último elemento si hay un número impar de hijos */
+  .StatsSection > *:nth-last-child(1):nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Móviles grandes (hasta 768px) */
+@media (max-width: 768px) {
+  .StatsSection {
+    width: 90%;
+    min-height: 25vh;
+    margin-top: 1rem;
+    grid-template-columns: 1fr; /* 🔹 1 columna en móviles */
+  }
+}
+
+/* Móviles pequeños (hasta 480px) */
+@media (max-width: 480px) {
+  .StatsSection {
+    width: 95%;
+    margin-top: 0.8rem;
+    padding: 1rem 0;
+    grid-template-columns: 1fr;
+  }
+}

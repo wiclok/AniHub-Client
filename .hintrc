@@ -3,6 +3,18 @@
     "development"
   ],
   "hints": {
-    "disown-opener": "off"
+    "disown-opener": "off",
+    "compat-api/css": [
+      "default",
+      {
+        "ignore": [
+          "backdrop-filter",
+          "min-height: auto"
+        ]
+      }
+    ],
+    "detect-css-reflows/composite": "off",
+    "detect-css-reflows/paint": "off",
+    "no-inline-styles": "off"
   }
 }

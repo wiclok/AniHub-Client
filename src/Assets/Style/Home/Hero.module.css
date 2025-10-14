@@ -1,0 +1,212 @@
+.Hero {
+  height: 50vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.heroTitle {
+  font-size: 3.9rem;
+  color: #fff;
+  margin-bottom: 20px;
+  padding: 2rem 1rem 0 1rem;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.wordWithIcon {
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.wordWithIcon svg {
+  position: absolute;
+  left: 85%;
+  top: -20%;
+  transform: translateX(-50%);
+  width: 35px;
+  height: 35px;
+  color: #fdc700;
+  animation: rotateSparkle 2s linear infinite;
+}
+
+.textGradient {
+  background: linear-gradient(90deg, #ff8a00, #e52e71, #9b00ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-emphasis-color: transparent; 
+}
+
+.heroSubtitle {
+  font-size: 1.4rem;
+  color: #ccc;
+  text-align: center;
+  margin: 0 0 30px 0;
+  padding: 0 1rem;
+  line-height: 1.5;
+}
+
+.ctaContainer {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.ctaButton {
+  height: 45px;
+  width: 250px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+  gap: 10px;
+}
+
+.ctaButtonPrimary {
+  color: white;
+  background: linear-gradient(90deg, #a844ff, #ff4ecd, #a844ff);
+  background-size: 200% 100%;
+  background-position: left;
+  transition: all 0.3s ease;
+}
+.ctaButtonPrimary:hover {
+  background-position: right;
+  box-shadow: 0 15px 30px -7px #a844ff;
+  transform: scale(1.05);
+}
+
+.ctaButtonPrimary svg {
+  transition: transform 0.3s ease;
+}
+
+.ctaButtonPrimary:hover svg {
+  transform: rotate(20deg);
+}
+
+.ctaButtonSecondary {
+  color: #fff;
+  background: transparent;
+  border: 1px solid #60427c;
+  transition: all 0.3s ease;
+}
+.ctaButtonSecondary:hover {
+  transform: scale(1.05);
+  background: #4c37616d;
+}
+
+.ctaButtonSecondary svg {
+  transition: transform 0.3s ease;
+}
+
+.ctaButtonSecondary:hover svg {
+  transform: scale(1.1);
+  color: #F46679;
+}
+
+@keyframes rotateSparkle {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 📱 Responsive breakpoints */
+
+/* Tablets grandes y laptops pequeñas (hasta 1200px) */
+@media (max-width: 1200px) {
+  .Hero {
+    width: 75%;
+    height: auto;
+  }
+  .heroTitle {
+    font-size: 3.3rem;
+  }
+  .heroSubtitle {
+    font-size: 1.2rem;
+  }
+  .wordWithIcon svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Tablets (hasta 992px) */
+@media (max-width: 992px) {
+  .Hero {
+    width: 85%;
+  }
+  .heroTitle {
+    font-size: 2.8rem;
+    padding-top: 1.5rem;
+  }
+  .heroSubtitle {
+    font-size: 1.1rem;
+  }
+  .ctaButton {
+    width: 220px;
+    font-size: 1rem;
+  }
+}
+
+/* Móviles grandes (hasta 768px) */
+@media (max-width: 768px) {
+  .Hero {
+    width: 90%;
+  }
+  .heroTitle {
+    font-size: 2.3rem;
+  }
+  .heroSubtitle {
+    font-size: 1rem;
+  }
+  .wordWithIcon svg {
+    width: 24px;
+    height: 24px;
+    top: -15%;
+  }
+  .ctaContainer {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .ctaButton {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+/* Móviles pequeños (hasta 480px) */
+@media (max-width: 480px) {
+  .Hero {
+    width: 95%;
+    height: auto;
+    padding-bottom: 2rem;
+  }
+  .heroTitle {
+    font-size: 1.9rem;
+    line-height: 1.3;
+  }
+  .heroSubtitle {
+    font-size: 0.95rem;
+  }
+  .ctaButton {
+    height: 42px;
+    font-size: 0.95rem;
+  }
+  .wordWithIcon svg {
+    width: 20px;
+    height: 20px;
+  }
+}

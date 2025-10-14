@@ -1,8 +1,20 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { Index } from './Page/Index'
 
 function App() {
 
   return (
-    <h1>Hola Mundo</h1>
+
+    <BrowserRouter>
+
+      <Routes>
+
+        <Route path="/" element={<Index />} ></Route>
+
+      </Routes>
+
+    </BrowserRouter>
+
   )
 }
 

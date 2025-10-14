@@ -1,0 +1,44 @@
+.cardStats {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.3rem;
+  cursor: pointer;
+}
+
+.cardStats:hover .cardIcon{
+  transform:  scale(1.1)
+              rotate(10deg);
+  box-shadow: 0 15px 30px -7px #a844ff;
+}
+
+.cardIcon {
+  width: 90px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background: linear-gradient(to right, #66239C, #781E8D);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+}
+
+.cardTitle {
+  font-size: 2.1rem;
+  text-align: center;
+  font-weight: 700;
+  transition: color 0.3s ease;  
+}
+
+.cardStats:hover .cardTitle {
+  color: #a844ff;
+}
+
+.cardDescription {
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-align: center;
+  color: #7b7c8e;
+}
