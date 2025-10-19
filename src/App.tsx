@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { Index } from './Page/Index'
+import { RegisterPage } from "./Page/RegisterPage"
 
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
       <Routes>
 
         <Route path="/" element={<Index />} ></Route>
+        <Route path="/register" element={<RegisterPage />} ></Route>
 
       </Routes>
 
