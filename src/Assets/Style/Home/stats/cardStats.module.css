@@ -2,16 +2,24 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  gap: 1.2rem;
+  display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.3rem;
-  cursor: pointer;
 }
+
 
 .cardStats:hover .cardIcon{
   transform:  scale(1.1)
               rotate(10deg);
   box-shadow: 0 15px 30px -7px #a844ff;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .cardIcon {
@@ -27,9 +35,9 @@
 
 .cardTitle {
   font-size: 2.1rem;
-  text-align: center;
   font-weight: 700;
   transition: color 0.3s ease;  
+  text-align: center;
 }
 
 .cardStats:hover .cardTitle {
@@ -39,6 +47,11 @@
 .cardDescription {
   font-size: 1.3rem;
   font-weight: 600;
-  text-align: center;
   color: #7b7c8e;
+  text-align: center;
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

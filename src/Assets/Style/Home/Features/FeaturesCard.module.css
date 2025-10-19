@@ -1,6 +1,6 @@
 .FeaturesCard {
   background: #8a74a122 ;
-  height: 20rem;
+  height: 23rem;
   border: 1px solid #8a74a144;
   border-radius: 8px;
   padding: 2rem;
@@ -12,7 +12,6 @@
   transition: all 0.3s ease;
   cursor: pointer;
   &:hover {
-    background: #8a74a133 ;
     border: 1px solid #8a74a166;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transform: translateY(-5px);
