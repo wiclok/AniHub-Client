@@ -11,7 +11,7 @@ function App() {
       <Routes>
 
         <Route path="/" element={<Index />} ></Route>
-        <Route path="/register" element={<RegisterPage />} ></Route>
+        <Route path="https://anihubtest.netlify.app/Register" element={<RegisterPage />} ></Route>
 
       </Routes>
 
