@@ -1,0 +1,149 @@
+.RegisterPage {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background: linear-gradient(130deg, #221B42 20%, #67209d 60%, #221B42);
+  padding: 2rem ;
+}
+
+.RegisterPage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(red 1px, transparent 1px),
+    radial-gradient(white 1px, transparent 1px);
+  background-size: 100px 100px, 80px 80px;
+  background-position: 0 0, 50px 50px;
+  opacity: 0.25;
+  z-index: 0;
+}
+
+.backgroundCircles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.circle {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: #ff00cc21;
+  filter: blur(60px);
+  animation: pulse 3.5s infinite ease-in-out;
+  pointer-events: none;
+}
+
+.circleTopLeft {
+  top: 60px;
+  left: 60px;
+}
+
+.circleBottomRight {
+  bottom: 40px;
+  right: 40px;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+}
+
+.content {
+  height: auto;
+  width: 35%;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 2rem;
+  align-items: center;
+  box-sizing: border-box;
+  color: white;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  z-index: 1;
+  padding: 1rem;
+}
+
+h1 {
+  margin-bottom: 1rem;
+}
+
+p {
+  margin-bottom: 2rem;
+  max-width: 80%;
+  line-height: 1.5;
+  opacity: 0.7;
+}
+
+/* 📱 RESPONSIVE DESIGN */
+@media (max-width: 1200px) {
+  .content {
+    width: 50%;
+  }
+}
+
+@media (max-width: 900px) {
+  .content {
+    width: 65%;
+  }
+}
+
+@media (max-width: 700px) {
+  .content {
+    width: 80%;
+    height: auto;
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .content {
+    width: 90%;
+    padding: 1.5rem 1rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 0.875rem;
+  }
+
+  .circle {
+    width: 250px;
+    height: 250px;
+    filter: blur(40px);
+  }
+
+  .circleTopLeft {
+    top: 20px;
+    left: 20px;
+  }
+
+  .circleBottomRight {
+    bottom: 20px;
+    right: 20px;
+  }
+}
