@@ -6,6 +6,8 @@ import { IconEye } from "../../Assets/icons/IconEye";
 import { useState } from "react";
 import { IconEyeClosed } from "../../Assets/icons/IconEyeClosed";
 import { IconExclamationCircle } from "../../Assets/icons/IconExclamationCircle";
+import { CustomFetch } from "../../api/customFetch";
+import { IconGoogle } from "../../Assets/icons/IconGoogle";
 
 export const FormRegister = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,7 +17,7 @@ export const FormRegister = () => {
   const [passwordScore, setPasswordScore] = useState<number>(0);
 
   const [userData, setUserData] = useState({
-    username: "",
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -23,11 +25,21 @@ export const FormRegister = () => {
   });
 
   const [errors, setErrors] = useState({
-    username: "",
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+
+  const [touched, setTouched] = useState({
+    name: false,
+    email: false,
+    password: false,
+    confirmPassword: false,
+  });
+
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
   const handlePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -45,6 +57,12 @@ export const FormRegister = () => {
     if (type !== "checkbox") {
       validateField(name, value);
     }
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+    setTouched((prev) => ({ ...prev, [name]: true }));
+    validateField(name, userData[name as keyof typeof userData] as string);
   };
 
   const evaluatePasswordStrength = (password: string) => {
@@ -66,10 +84,10 @@ export const FormRegister = () => {
   };
 
   const getStrengthColor = (score: number) => {
-    if (score <= 1) return "#ff1a1a"; // rojo fuerte
-    if (score === 2) return "#ff4d4f"; // rojo medio
-    if (score === 3 || score === 4) return "#ffa940"; // naranja
-    if (score === 5) return "#52c41a"; // verde
+    if (score <= 1) return "#ff1a1a";
+    if (score === 2) return "#ff4d4f";
+    if (score === 3 || score === 4) return "#ffa940";
+    if (score === 5) return "#52c41a";
     return "rgba(255,255,255,0.2)";
   };
 
@@ -77,7 +95,7 @@ export const FormRegister = () => {
     let error = "";
 
     switch (name) {
-      case "username":
+      case "name":
         if (value.length <= 0) {
           error = "El nombre de usuario es requerido";
         } else if (value.length < 3) {
@@ -113,21 +131,36 @@ export const FormRegister = () => {
     setErrors((prev) => ({ ...prev, [name]: error }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setServerError(null);
+
+    try {
+      const response = await CustomFetch(
+        "http://localhost:3000/auth/register",
+        "POST",
+        userData
+      );
+
+      console.log("✅ Usuario registrado:", response);
+      setShowModal(true);
+    } catch (error: any) {
+      setServerError(error.message);
+      setShowModal(true);
+    }
   };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       {/* Nombre de usuario */}
       <div className={styles.inputDiv}>
-        <label htmlFor="username">Nombre de usuario</label>
+        <label htmlFor="name">Nombre de usuario</label>
         <div
           className={`${styles.input} ${
-            errors.username ? styles.inputError : ""
+            touched.name && errors.name ? styles.inputError : ""
           }`}
         >
-          {errors.username ? (
+          {touched.name && errors.name ? (
             <IconUser color="red" className={styles.icon} />
           ) : (
             <IconUser className={styles.icon} />
@@ -135,25 +168,29 @@ export const FormRegister = () => {
           <input
             type="text"
             placeholder="otaku_arg"
-            id="username"
-            name="username"
-            value={userData.username}
+            id="name"
+            name="name"
+            value={userData.name}
             onChange={handleChange}
+            onBlur={handleBlur}
           />
-          {errors.username && (
+          {touched.name && errors.name && (
             <IconExclamationCircle color="red" className={styles.iconError} />
           )}
         </div>
-        {errors.username && (
-          <p className={styles.errorText}>{errors.username}</p>
+        {touched.name && errors.name && (
+          <p className={styles.errorText}>{errors.name}</p>
         )}
       </div>
-
       {/* Email */}
       <div className={styles.inputDiv}>
         <label htmlFor="email">Email</label>
-        <div className={styles.input}>
-          {errors.email ? (
+        <div
+          className={`${styles.input} ${
+            touched.email && errors.email ? styles.inputError : ""
+          }`}
+        >
+          {touched.email && errors.email ? (
             <IconMail color="red" className={styles.icon} />
           ) : (
             <IconMail className={styles.icon} />
@@ -165,14 +202,16 @@ export const FormRegister = () => {
             name="email"
             value={userData.email}
             onChange={handleChange}
+            onBlur={handleBlur}
           />
-          {errors.email && (
+          {touched.email && errors.email && (
             <IconExclamationCircle color="red" className={styles.iconError} />
           )}
         </div>
-        {errors.email && <p className={styles.errorText}>{errors.email}</p>}
+        {touched.email && errors.email && (
+          <p className={styles.errorText}>{errors.email}</p>
+        )}
       </div>
-
       {/* Contraseña */}
       <div className={styles.inputDiv}>
         <label htmlFor="password">Contraseña</label>
@@ -185,6 +224,7 @@ export const FormRegister = () => {
             name="password"
             value={userData.password}
             onChange={handleChange}
+            onBlur={handleBlur}
           />
           <div onClick={handlePasswordVisibility}>
             {showPassword ? <IconEye /> : <IconEyeClosed />}
@@ -192,9 +232,7 @@ export const FormRegister = () => {
         </div>
 
         {/* Texto y barra de fortaleza */}
-        {userData.password.length === 0 ? (
-          <p className={styles.errorText}>La contraseña es requerida</p>
-        ) : (
+        {userData.password.length > 0 && (
           <>
             {passwordStrength && (
               <p
@@ -241,14 +279,19 @@ export const FormRegister = () => {
             </div>
           </>
         )}
-      </div>
 
+        {touched.password && errors.password && (
+          <p className={styles.errorText}>{errors.password}</p>
+        )}
+      </div>
       {/* Confirmar contraseña */}
       <div className={styles.inputDiv}>
         <label htmlFor="passwordConfirm">Confirmar Contraseña</label>
         <div
           className={`${styles.input} ${
-            errors.confirmPassword ? styles.inputError : ""
+            touched.confirmPassword && errors.confirmPassword
+              ? styles.inputError
+              : ""
           }`}
         >
           <IconLock className={styles.icon} />
@@ -259,21 +302,16 @@ export const FormRegister = () => {
             name="confirmPassword"
             value={userData.confirmPassword}
             onChange={handleChange}
+            onBlur={handleBlur}
           />
-          {errors.confirmPassword && (
+          {touched.confirmPassword && errors.confirmPassword && (
             <IconExclamationCircle color="red" className={styles.iconError} />
           )}
         </div>
-
-        {userData.confirmPassword.length === 0 ? (
-          <p className={styles.errorText}>
-            La confirmación de contraseña es requerida
-          </p>
-        ) : errors.confirmPassword ? (
+        {touched.confirmPassword && errors.confirmPassword && (
           <p className={styles.errorText}>{errors.confirmPassword}</p>
-        ) : null}
+        )}
       </div>
-
       {/* Términos */}
       <div className={styles.terms}>
         <label htmlFor="terms">
@@ -288,11 +326,51 @@ export const FormRegister = () => {
           <a href="#">políticas de privacidad</a>
         </label>
       </div>
-
       <button type="submit">Registrarse</button>
+      {/* 🔹 Login con Google */}
+      <div className={styles.divider}>
+        <span>o</span>
+      </div>
+      <a
+        href="http://localhost:3000/auth/google"
+        className={styles.googleButton}
+      >
+        <IconGoogle size={24}/>
+        Continuar con Google
+      </a>
       <span>
-        ¿Ya tienes una cuenta? <a href="#">Inicia sesión</a>
+        ¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a>
       </span>
+      {showModal && (
+        <div
+          className={styles.modalOverlay}
+          onClick={() => setShowModal(false)}
+        >
+          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            {serverError ? (
+              <>
+                <h2>Error en el registro</h2>
+                <ul className={styles.errorList}>
+                  {serverError?.split(",").map((msg, idx) => (
+                    <li key={idx}>{msg.trim()}</li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <>
+                <h2>¡Registro exitoso! 🎉</h2>
+                <p>
+                  Te enviamos un correo de verificación. <br />
+                  Revisá tu bandeja de entrada y hacé clic en el botón
+                  <strong> “Verificar mi correo”</strong> para activar tu
+                  cuenta.
+                </p>
+              </>
+            )}
+            <button onClick={() => setShowModal(false)}>Cerrar</button>
+          </div>
+        </div>
+      )}
     </form>
   );
 };
