@@ -7,6 +7,7 @@ import { IconEye } from "../../Assets/icons/IconEye";
 import { CustomFetch } from "../../api/customFetch";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { IconGoogle } from "../../Assets/icons/IconGoogle";
 
 export const FormLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -132,6 +133,17 @@ export const FormLogin = () => {
 
       <button type="submit">Iniciar Sesión</button>
 
+      {/* 🔹 Login con Google */}
+      <div className={styles.divider}>
+        <span>o</span>
+      </div>
+      <a
+        href="http://localhost:3000/auth/google"
+        className={styles.googleButton}
+      >
+        <IconGoogle size={24}/>
+        Continuar con Google
+      </a>
       <span>
         ¿No tienes una cuenta? <a href="/register">Regístrate aquí</a>
       </span>
