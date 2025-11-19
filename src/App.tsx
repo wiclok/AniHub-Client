@@ -6,6 +6,7 @@ import { HomePage } from "./Page/HomePage";
 import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import { PublicRoute } from "./routes/PublicRoute";
+import { NotFound404 } from "./Page/NotFound404";
 
 function App() {
   return (
@@ -42,6 +43,10 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* Redireccion 404 */}
+          <Route path="/*" element={<NotFound404 />}/>
+
         </Routes>
       </AuthProvider>
     </BrowserRouter>
