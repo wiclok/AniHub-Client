@@ -5,6 +5,7 @@ interface User {
   id: number;
   name: string;
   email: string;
+  avatar: string;
 }
 
 interface AuthContextType {
@@ -37,8 +38,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const logout = async () => {
-    await CustomFetch("http://localhost:3000/auth/logout", "POST");
-    setUser(null);
+    try {
+      await CustomFetch("http://localhost:3000/auth/logout", "POST");
+    } catch (error) {
+      console.error('Error al hacer logout', error)
+    } finally {
+      setUser(null)
+    }
   };
 
   useEffect(() => {
