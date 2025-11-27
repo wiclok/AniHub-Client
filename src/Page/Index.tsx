@@ -1,10 +1,10 @@
-import { Header } from "../Components/PageHome/Header"
+import { Header } from "../Components/Lading/Header"
 import styles from '../Assets/Style/Home/Home.module.css'
-import { Hero } from "../Components/PageHome/Hero"
-import { Stats } from "../Components/PageHome/Stats/Stats"
-import { Features } from "../Components/PageHome/Features/Features"
-import { CtaSection } from "../Components/PageHome/CtaSection"
-import { Footer } from "../Components/PageHome/Footer"
+import { Hero } from "../Components/Lading/Hero"
+import { Stats } from "../Components/Lading/Stats/Stats"
+import { Features } from "../Components/Lading/Features/Features"
+import { CtaSection } from "../Components/Lading/CtaSection"
+import { Footer } from "../Components/Lading/Footer"
 
 export const Index = () => {
   return (
