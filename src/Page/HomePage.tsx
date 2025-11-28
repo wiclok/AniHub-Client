@@ -1,4 +1,5 @@
 import styles from '../Assets/Style/Home/home.module.css'
+import { Hero } from '../Components/Home/Hero'
 import { Header } from '../Components/Lading/Header'
 
 export const HomePage = () => {
@@ -10,6 +11,10 @@ export const HomePage = () => {
       </div>
 
       <Header />
+
+      <div className={styles.mainContent}>
+        <Hero />
+      </div>
     </div>
   )
 }
