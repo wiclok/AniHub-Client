@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
-import styles from "../../Assets/Style/Home/Header.module.css";
+import styles from "../../Assets/Style/Landing/Header.module.css";
 
 export const Header = () => {
   const { user, logout } = useAuth();
@@ -41,6 +41,9 @@ export const Header = () => {
           src="AniHub-logo-trasparent-min.png"
           alt="Logo de AniHub"
           className={styles.logo}
+          onClick={()=> {
+            window.location.href = '/'
+          }}
         />
       </div>
 
@@ -55,34 +58,38 @@ export const Header = () => {
             </a>
           </>
         ) : (
-          <div className={styles.profileWrapper} ref={menuRef}>
-            <button
-              type="button"
-              className={styles.profileButton}
-              onClick={() => setIsMenuOpen((prev) => !prev)}
-            >
-              <img
-                src={avatarSrc}
-                alt="imagen del perfil"
-                className={styles.imageProfile}
-              />
-            </button>
+          <>
+            <a className={styles.anchor} href="#">Catálogo</a>
+            <a className={styles.anchor} href="#">Rankings</a>
+            <div className={styles.profileWrapper} ref={menuRef}>
+              <button
+                type="button"
+                className={styles.profileButton}
+                onClick={() => setIsMenuOpen((prev) => !prev)}
+              >
+                <img
+                  src={avatarSrc}
+                  alt="imagen del perfil"
+                  className={styles.imageProfile}
+                />
+              </button>
 
-            {isMenuOpen && (
-              <div className={styles.dropdownMenu}>
-                <div className={styles.dropdownItem} onClick={handleLogout}>
-                  Cerrar sesión
-                </div>
+              {isMenuOpen && (
+                <div className={styles.dropdownMenu}>
+                  <div className={styles.dropdownItem} onClick={handleLogout}>
+                    Cerrar sesión
+                  </div>
 
-                <div
-                  className={styles.dropdownItem}
-                  onClick={() => console.log("Otra opción")}
-                >
-                  Otra opción
+                  <div
+                    className={styles.dropdownItem}
+                    onClick={() => console.log("Otra opción")}
+                  >
+                    Otra opción
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          </>
         )}
       </div>
     </header>

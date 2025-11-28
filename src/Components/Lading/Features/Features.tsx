@@ -1,4 +1,4 @@
-import styles from '../../../Assets/Style/Home/Features/Features.module.css'
+import styles from '../../../Assets/Style/Landing/Features/Features.module.css'
 import { FeaturesCard } from './FeaturesCard'
 import { IconCalendarWeek } from '../../../Assets/icons/IconCalendarWeek'
 import { IconPlayerPlay } from '../../../Assets/icons/IconPlayerPlay'

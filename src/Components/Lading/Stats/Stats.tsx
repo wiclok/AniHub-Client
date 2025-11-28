@@ -1,4 +1,4 @@
-import styles from '../../../Assets/Style/Home/stats/Stats.module.css'
+import styles from '../../../Assets/Style/Landing/stats/Stats.module.css'
 import { CardStats } from './CardStats'
 import { IconTrendingUp } from '../../../Assets/icons/IconTrendingUp'
 import { IconUsers } from '../../../Assets/icons/IconUsers'

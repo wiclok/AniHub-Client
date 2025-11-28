@@ -1,5 +1,5 @@
 import { Header } from "../Components/Lading/Header"
-import styles from '../Assets/Style/Home/Home.module.css'
+import styles from '../Assets/Style/Landing/Landing.module.css'
 import { Hero } from "../Components/Lading/Hero"
 import { Stats } from "../Components/Lading/Stats/Stats"
 import { Features } from "../Components/Lading/Features/Features"
@@ -10,7 +10,6 @@ export const Index = () => {
   return (
 
     <>
-
       <div className={styles.Home}>
         <div className={styles.backgroundCircles}>
           <div className={`${styles.circle} ${styles.circleTopLeft}`} />
@@ -26,7 +25,6 @@ export const Index = () => {
         </main>
         <Footer />
       </div>
-
     </>
   )
 }

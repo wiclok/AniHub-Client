@@ -1,0 +1,72 @@
+.Home {
+  min-height: 100vh;
+  position: relative;
+  background: linear-gradient(130deg, #221B42 20%, #67209d 60%, #221B42);
+  overflow: hidden;
+}
+
+.Home::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(red 1px, transparent 1px),
+    radial-gradient(white 1px, transparent 1px);
+  background-size: 100px 100px, 80px 80px;
+  background-position: 0 0, 50px 50px;
+  opacity: 0.25;
+  z-index: 0;
+}
+
+.backgroundCircles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.circle {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: #ff00cc21;
+  filter: blur(60px);
+  animation: pulse 3.5s infinite ease-in-out;
+  pointer-events: none;
+}
+
+.circleTopLeft {
+  top: 60px;
+  left: 60px;
+}
+
+.circleBottomRight {
+  bottom: 40px;
+  right: 40px;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+}
+
+.mainContent {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

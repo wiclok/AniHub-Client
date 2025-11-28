@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import styles from "../../../Assets/Style/Home/Features/FeaturesCard.module.css";
+import styles from "../../../Assets/Style/Landing/Features/FeaturesCard.module.css";
 
 type Props = {
   icon: JSX.Element;

@@ -1,4 +1,4 @@
-import styles from '../../Assets/Style/Home/Hero.module.css'
+import styles from '../../Assets/Style/Landing/Hero.module.css'
 import { IconSparkles } from  '../../Assets/icons/IconSparkles'
 import { IconBolt } from '../../Assets/icons/IconBolt'
 import { IconHeart } from '../../Assets/icons/IconHeart'
