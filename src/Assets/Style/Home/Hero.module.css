@@ -1,0 +1,95 @@
+.Hero {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  max-width: 60rem;
+  padding: 1.5rem 1rem;
+  gap: 0.75rem;
+  margin: 0 auto;
+    
+  & h1 {
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    text-align: center;
+    line-height: 1.2;
+
+    & span {
+      background: linear-gradient(90deg, #C27AFF, #DE74E1, #FA64B7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-emphasis-color: transparent;
+    }
+  }
+
+  & p {
+    text-align: center;
+    font-size: clamp(0.95rem, 1.6vw, 1.2rem);
+    width: 100%;
+    max-width: 40rem;
+  }
+}
+
+.welcomeMessage {
+  min-height: 2.5rem;
+  width: auto;
+  max-width: 100%;
+  text-align: center;
+  border: 1px solid #57288A;
+  background-color: #3B1C62;
+  border-radius: 20px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: #DAB2FF;
+  padding: 0.75rem 1rem;
+  gap: .5rem;
+  margin-top: 0.5rem;
+
+  & .IconSparkles {
+    color: #C27AFF;
+    flex-shrink: 0;
+  }
+}
+
+/* === BREAKPOINTS === */
+
+/* Tablets / pantallas medianas (aprox. tu diseño original) */
+@media (min-width: 768px) {
+  .Hero {
+    padding: 2rem 1.5rem;
+    min-height: 20rem;
+  }
+}
+
+/* Desktop (cerca de tus 1152px) */
+@media (min-width: 1024px) {
+  .Hero {
+    width: 60%;
+    padding: 2.5rem 0;
+    min-height: 24rem;
+  }
+}
+
+/* Pantallas muy pequeñas (teléfonos chicos) */
+@media (max-width: 480px) {
+  .Hero {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .Hero h1 {
+    font-size: clamp(2rem, 9vw, 2.6rem);
+  }
+
+  .Hero p {
+    font-size: 0.9rem;
+  }
+
+  .welcomeMessage {
+    border-radius: 999px;
+    font-size: 0.85rem;
+  }
+}
