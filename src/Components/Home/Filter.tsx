@@ -1,9 +1,13 @@
-import { useRef, useState } from "react";
+import { useRef, useState, type Dispatch, type SetStateAction } from "react";
 import styles from "../../Assets/Style/Home/Filter.module.css";
 import { IconSearch } from "../../Assets/icons/IconSearch";
 import { IconFilter } from "../../Assets/icons/IconFilter";
 
-export const Filter = () => {
+type Props = {
+  setFilterOpen: Dispatch<SetStateAction<boolean>>
+}
+
+export const Filter = ({setFilterOpen}: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const handleFocusInput = () => {
     inputRef.current?.focus();
@@ -32,7 +36,7 @@ export const Filter = () => {
         />
       </div>
       <div className={styles.buttonsFilters}>
-        <button className={`${styles.buttonFilter}`}>
+        <button onClick={() => setFilterOpen(prev => !prev)} className={`${styles.buttonFilter}`}>
           <IconFilter size={20} />
           Filtros
         {
