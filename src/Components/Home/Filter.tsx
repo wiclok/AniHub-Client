@@ -18,11 +18,8 @@ export const Filter = () => {
         ? prev.filter((item) => item !== value)
         : [...prev, value];
     });
-
-    console.log("Seleccionaste:", value);
   };
 
-  console.log("Filtros actuales:", filters);
   return (
     <section className={styles.Filter}>
       <div onClick={handleFocusInput} className={styles.contentInputSearch}>
