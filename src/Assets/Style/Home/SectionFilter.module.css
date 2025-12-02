@@ -1,0 +1,27 @@
+.sectionFilter {
+  height: auto;
+  width: 90%;
+  margin-top: 4rem;
+  padding: 4rem;
+  background-color: #6b508a56;
+  border: 1px solid #735694d3;
+  border-radius: 15px;
+}
+
+.sectionInputsSelect {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.inputSelect{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: .5rem;
+  & label {
+    color: #D1D5DC;
+  }
+}
