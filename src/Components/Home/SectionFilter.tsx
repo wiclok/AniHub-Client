@@ -1,14 +1,34 @@
-import { useState } from "react";
+import { IconX } from "../../Assets/icons/IconX";
 import styles from "../../Assets/Style/Home/SectionFilter.module.css";
+import type { AnimeFilters } from "../../types/anime";
 import { CustomSelect } from "../utils/CustomSelect";
 
-export const SectionFilter = () => {
-  const [year, setYear] = useState<string | null>(null);
-  const [status, setStatus] = useState<string | null>(null);
-  const [orderBy, setOrderBy] = useState<string | null>("popular");
+type Props = {
+  year: string | null;
+  status: string | null;
+  orderBy: string;
+  onChangeYear: (year: string | null) => void;
+  onChangeStatus: (status: AnimeFilters["status"]) => void;
+  onChangeOrderBy: (orderBy: AnimeFilters["orderBy"]) => void;
+  activeGenres: string[];
+  onToggleGenres: (genre: string) => void;
+  activeFilters: number;
+  handleClearFilters: () => void
+};
 
+export const SectionFilter = ({
+  year,
+  status,
+  orderBy,
+  onChangeYear,
+  onChangeStatus,
+  onChangeOrderBy,
+  activeGenres,
+  onToggleGenres,
+  activeFilters,
+  handleClearFilters
+}: Props) => {
   const years = [
-    { label: "Cualquier año", value: "" },
     { label: "Año 2025", value: "2025" },
     { label: "Año 2024", value: "2024" },
     { label: "Año 2023", value: "2023" },
@@ -30,7 +50,6 @@ export const SectionFilter = () => {
   ];
 
   const statuses = [
-    { label: "Cualquier estado", value: "" },
     { label: "En emisión", value: "ongoing" },
     { label: "Finalizado", value: "finished" },
     { label: "Próximamente", value: "upcoming" },
@@ -42,6 +61,21 @@ export const SectionFilter = () => {
     { label: "Lo más visto", value: "views" },
   ];
 
+  const genres = [
+    "Acción",
+    "Aventura",
+    "Comedia",
+    "Drama",
+    "Fantasía",
+    "Horror",
+    "Romance",
+    "Escolar",
+    "Sobrenatural",
+    "Miltar",
+    "Histórico",
+    "Superhéroes",
+  ];
+
   return (
     <section className={styles.sectionFilter}>
       <div className={styles.sectionInputsSelect}>
@@ -50,15 +84,15 @@ export const SectionFilter = () => {
           placeholder="Cualquier año"
           value={year}
           options={years}
-          onChange={setYear}
+          onChange={onChangeYear}
         />
 
         <CustomSelect
           label="Estado"
           placeholder="Cualquier estado"
-          value={status}
+          value={status ?? ""}
           options={statuses}
-          onChange={setStatus}
+          onChange={(val) => onChangeStatus(val as AnimeFilters["status"])}
         />
 
         <CustomSelect
@@ -66,10 +100,37 @@ export const SectionFilter = () => {
           placeholder="Popularidad"
           value={orderBy}
           options={orderOptions}
-          onChange={setOrderBy}
+          onChange={(val) => onChangeOrderBy(val as AnimeFilters["orderBy"])}
         />
       </div>
-      
+
+      <div className={styles.containerButtonsGeneros}>
+        {genres.map((g) => (
+          <button
+            key={g}
+            type="button"
+            onClick={() => onToggleGenres(g)}
+            className={`${styles.btnGenero} ${
+              activeGenres.includes(g) ? styles.btnGeneroActive : ""
+            }`}
+          >
+            {g}
+          </button>
+        ))}
+      </div>
+      {activeFilters !== 0 && (
+        <>
+          <div className={styles.divider}></div>
+          <div className={styles.divButtonClearFilters}>
+            <button
+              onClick={handleClearFilters}
+            >
+              <IconX size={20} color="#FFA2A2" />
+              Limpiar Filtros
+            </button>
+          </div>
+        </>
+      )}
     </section>
   );
 };

@@ -1,27 +1,28 @@
-import { useRef, useState, type Dispatch, type SetStateAction } from "react";
+import { useRef, type Dispatch, type SetStateAction } from "react";
 import styles from "../../Assets/Style/Home/Filter.module.css";
 import { IconSearch } from "../../Assets/icons/IconSearch";
 import { IconFilter } from "../../Assets/icons/IconFilter";
 
 type Props = {
-  setFilterOpen: Dispatch<SetStateAction<boolean>>
-}
+  setFilterOpen: Dispatch<SetStateAction<boolean>>;
+  search: string;
+  onSearchChange: (value: string) => void;
+  activeGenres: string[];
+  onToggleGenres: (genre: string) => void;
+  activeFilters: number;
+};
 
-export const Filter = ({setFilterOpen}: Props) => {
+export const Filter = ({
+  setFilterOpen,
+  search,
+  onSearchChange,
+  activeGenres,
+  onToggleGenres,
+  activeFilters
+}: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const handleFocusInput = () => {
     inputRef.current?.focus();
-  };
-
-  const [filters, setFilters] = useState<string[]>([]);
-  const selectFilter = (e: any) => {
-    const value = e.target.value;
-
-    setFilters((prev) => {
-      return prev.includes(value)
-        ? prev.filter((item) => item !== value)
-        : [...prev, value];
-    });
   };
 
   return (
@@ -33,48 +34,63 @@ export const Filter = ({setFilterOpen}: Props) => {
           className={styles.inputSearch}
           type="text"
           placeholder="Buscar anime, géneros, estudios..."
+          value={search}
+          onChange={(e) => onSearchChange(e.target.value)}
         />
       </div>
       <div className={styles.buttonsFilters}>
-        <button onClick={() => setFilterOpen(prev => !prev)} className={`${styles.buttonFilter}`}>
+        <button
+          onClick={() => setFilterOpen((prev) => !prev)}
+          className={`${styles.buttonFilter}`}
+        >
           <IconFilter size={20} />
           Filtros
-        {
-          filters.length !== 0 && <span className={styles.numberFilter}>{filters.length}</span>
-        }
+          {activeFilters !== 0 && (
+            <span className={styles.numberFilter}>{activeFilters}</span>
+          )}
         </button>
         <button
-          onClick={selectFilter}
+          onClick={() => onToggleGenres("Acción")}
           value={"Acción"}
-          className={`${styles.buttonFilter} ${filters.includes("Acción") ? styles.active : ""}`}
+          className={`${styles.buttonFilter} ${
+            activeGenres.includes("Acción") ? styles.active : ""
+          }`}
         >
           Acción
         </button>
         <button
-          onClick={selectFilter}
+          onClick={() => onToggleGenres("Aventura")}
           value={"Aventura"}
-          className={`${styles.buttonFilter} ${filters.includes("Aventura") ? styles.active : ""}`}
+          className={`${styles.buttonFilter} ${
+            activeGenres.includes("Aventura") ? styles.active : ""
+          }`}
         >
           Aventura
         </button>
         <button
-          onClick={selectFilter}
+          onClick={() => onToggleGenres("Romance")}
           value={"Romance"}
-          className={`${styles.buttonFilter} ${filters.includes("Romance") ? styles.active : ""}`}
+          className={`${styles.buttonFilter} ${
+            activeGenres.includes("Romance") ? styles.active : ""
+          }`}
         >
           Romance
         </button>
         <button
-          onClick={selectFilter}
+          onClick={() => onToggleGenres("Comedia")}
           value={"Comedia"}
-          className={`${styles.buttonFilter} ${filters.includes("Comedia") ? styles.active : ""}`}
+          className={`${styles.buttonFilter} ${
+            activeGenres.includes("Comedia") ? styles.active : ""
+          }`}
         >
           Comedia
         </button>
         <button
-          onClick={selectFilter}
+          onClick={() => onToggleGenres("Doblaje Latino")}
           value={"Doblaje Latino"}
-          className={`${styles.buttonFilter} ${filters.includes("Doblaje Latino") ? styles.active : ""}`}
+          className={`${styles.buttonFilter} ${
+            activeGenres.includes("Doblaje Latino") ? styles.active : ""
+          }`}
         >
           Doblaje Latino
         </button>

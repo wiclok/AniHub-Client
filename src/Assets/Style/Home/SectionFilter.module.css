@@ -1,8 +1,9 @@
 .sectionFilter {
   height: auto;
-  width: 90%;
-  margin-top: 4rem;
-  padding: 4rem;
+  width: 100%;
+  max-width: 70rem;
+  margin: clamp(2rem, 5vw, 4rem) auto 0 auto;
+  padding: clamp(1.5rem, 4vw, 4rem);
   background-color: #6b508a56;
   border: 1px solid #735694d3;
   border-radius: 15px;
@@ -15,13 +16,103 @@
   gap: 1rem;
 }
 
-.inputSelect{
+.inputSelect {
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  align-items: start;
-  gap: .5rem;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.5rem;
+
   & label {
     color: #D1D5DC;
+    font-size: 0.9rem;
+  }
+}
+
+.containerButtonsGeneros {
+  height: auto;
+  width: 100%;
+  margin-top: 1.5rem;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  
+  & .btnGenero {
+    height: 2rem;
+    min-width: 6rem;
+    padding: 0 0.75rem;
+    font-size: 0.9rem;
+    background-color: #6b508a56;
+    border: 1px solid #735694d3;
+    color: #C0BCCF;
+    border-radius: 10px;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  & .btnGeneroActive {
+    background-color: #532D7F;
+    border: 1px solid #7541af;
+  }
+}
+
+.divider {
+  height: 1px;
+  width: 100%;
+  background-color: #623D87;
+  margin: 2rem 0;
+}
+
+.divButtonClearFilters {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & button {
+    background-color: rgba(255, 0, 0, 0.184);
+    border: 1px solid red;
+    border-radius: 5px;
+    color: #FFA2A2;
+    height: 2.2rem;
+    width: 10rem;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+
+  & button:hover {
+    box-shadow: 1px 1px 10px 3px rgba(255, 0, 0, 0.383);
+  }
+}
+
+/* === BREAKPOINTS === */
+
+/* Tablets */
+@media (min-width: 768px) {
+  .sectionFilter {
+    width: 90%;
+  }
+
+  .divButtonClearFilters {
+    justify-content: flex-end;
+  }
+}
+
+/* Desktop grande (cerca de tu 1152px) */
+@media (min-width: 1024px) {
+  .sectionFilter {
+    width: 90%;
+    padding: 3rem 4rem;
   }
 }
