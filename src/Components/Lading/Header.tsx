@@ -7,10 +7,9 @@ export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
-
   const avatarSrc = user?.avatar
     ? user.avatar
-    : "/default-avatar-profile-icon-social-600nw-1906669723.webp";
+    : "/default-avatar-profile-icon.webp";
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -31,7 +30,7 @@ export const Header = () => {
 
   const handleLogout = () => {
     setIsMenuOpen(false);
-    logout && logout();
+    logout();
   };
 
   return (
@@ -41,8 +40,8 @@ export const Header = () => {
           src="AniHub-logo-trasparent-min.png"
           alt="Logo de AniHub"
           className={styles.logo}
-          onClick={()=> {
-            window.location.href = '/'
+          onClick={() => {
+            window.location.href = "/";
           }}
         />
       </div>
@@ -59,8 +58,12 @@ export const Header = () => {
           </>
         ) : (
           <>
-            <a className={styles.anchor} href="#">Catálogo</a>
-            <a className={styles.anchor} href="#">Rankings</a>
+            <a className={styles.anchor} href="#">
+              Catálogo
+            </a>
+            <a className={styles.anchor} href="#">
+              Rankings
+            </a>
             <div className={styles.profileWrapper} ref={menuRef}>
               <button
                 type="button"
@@ -68,9 +71,13 @@ export const Header = () => {
                 onClick={() => setIsMenuOpen((prev) => !prev)}
               >
                 <img
+                  key={avatarSrc}
                   src={avatarSrc}
                   alt="imagen del perfil"
                   className={styles.imageProfile}
+                  onError={(e) => {
+                    e.currentTarget.src = "/default-avatar-profile-icon.webp";
+                  }}
                 />
               </button>
 
