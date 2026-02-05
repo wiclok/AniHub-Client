@@ -1,5 +1,5 @@
 import type { JSX } from 'react';
-import styles from '../../../Assets/Style/Landing/stats/cardStats.module.css'
+import styles from '../../../assets/Style/Landing/stats/cardStats.module.css'
 
 type CardStatsProps = {
   icon: JSX.Element;

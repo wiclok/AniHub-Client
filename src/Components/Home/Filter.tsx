@@ -1,7 +1,7 @@
 import { useRef, type Dispatch, type SetStateAction } from "react";
-import styles from "../../Assets/Style/Home/Filter.module.css";
-import { IconSearch } from "../../Assets/icons/IconSearch";
-import { IconFilter } from "../../Assets/icons/IconFilter";
+import styles from "../../assets/Style/Home/Filter.module.css";
+import { IconSearch } from "../../assets/icons/IconSearch";
+import { IconFilter } from "../../assets/icons/IconFilter";
 
 type Props = {
   setFilterOpen: Dispatch<SetStateAction<boolean>>;

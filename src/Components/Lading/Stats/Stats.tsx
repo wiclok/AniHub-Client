@@ -1,8 +1,8 @@
-import styles from '../../../Assets/Style/Landing/stats/Stats.module.css'
+import styles from '../../../assets/Style/Landing/stats/Stats.module.css'
 import { CardStats } from './CardStats'
-import { IconTrendingUp } from '../../../Assets/icons/IconTrendingUp'
-import { IconUsers } from '../../../Assets/icons/IconUsers'
-import { IconHeart } from '../../../Assets/icons/IconHeart'
+import { IconTrendingUp } from '../../../assets/icons/IconTrendingUp'
+import { IconUsers } from '../../../assets/icons/IconUsers'
+import { IconHeart } from '../../../assets/icons/IconHeart'
 
 export const Stats = () => {
   return (

@@ -1,5 +1,5 @@
-import { IconSparkles } from '../../Assets/icons/IconSparkles'
-import styles from '../../Assets/Style/Home/Hero.module.css'
+import { IconSparkles } from '../../assets/icons/IconSparkles'
+import styles from '../../assets/Style/Home/Hero.module.css'
 import { useAuth } from '../../context/AuthContext'
 
 export const Hero = () => {

@@ -1,13 +1,13 @@
-import styles from "../../Assets/Style/Register/FormRegister.module.css";
-import { IconUser } from "../../Assets/icons/IconUser";
-import { IconMail } from "../../Assets/icons/IconMail";
-import { IconLock } from "../../Assets/icons/IconLock";
-import { IconEye } from "../../Assets/icons/IconEye";
+import styles from "../../assets/Style/Register/FormRegister.module.css";
+import { IconUser } from "../../assets/icons/IconUser";
+import { IconMail } from "../../assets/icons/IconMail";
+import { IconLock } from "../../assets/icons/IconLock";
+import { IconEye } from "../../assets/icons/IconEye";
 import { useState } from "react";
-import { IconEyeClosed } from "../../Assets/icons/IconEyeClosed";
-import { IconExclamationCircle } from "../../Assets/icons/IconExclamationCircle";
+import { IconEyeClosed } from "../../assets/icons/IconEyeClosed";
+import { IconExclamationCircle } from "../../assets/icons/IconExclamationCircle";
 import { CustomFetch } from "../../api/customFetch";
-import { IconGoogle } from "../../Assets/icons/IconGoogle";
+import { IconGoogle } from "../../assets/icons/IconGoogle";
 
 export const FormRegister = () => {
   const [showPassword, setShowPassword] = useState(false);

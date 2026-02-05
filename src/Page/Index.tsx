@@ -1,5 +1,5 @@
 import { Header } from "../Components/Lading/Header"
-import styles from '../Assets/Style/Landing/Landing.module.css'
+import styles from '../assets/Style/Landing/Landing.module.css'
 import { Hero } from "../Components/Lading/Hero"
 import { Stats } from "../Components/Lading/Stats/Stats"
 import { Features } from "../Components/Lading/Features/Features"

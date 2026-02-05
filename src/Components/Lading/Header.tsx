@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
-import styles from "../../Assets/Style/Landing/Header.module.css";
+import styles from "../../assets/Style/Landing/Header.module.css";
 
 export const Header = () => {
   const { user, logout } = useAuth();

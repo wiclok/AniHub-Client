@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { IconEyeClosed } from "../../Assets/icons/IconEyeClosed";
-import { IconLock } from "../../Assets/icons/IconLock";
-import { IconMail } from "../../Assets/icons/IconMail";
-import styles from "../../Assets/Style/Login/FormLogin.module.css";
-import { IconEye } from "../../Assets/icons/IconEye";
+import { IconEyeClosed } from "../../assets/icons/IconEyeClosed";
+import { IconLock } from "../../assets/icons/IconLock";
+import { IconMail } from "../../assets/icons/IconMail";
+import styles from "../../assets/Style/Login/FormLogin.module.css";
+import { IconEye } from "../../assets/icons/IconEye";
 import { CustomFetch } from "../../api/customFetch";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { IconGoogle } from "../../Assets/icons/IconGoogle";
+import { IconGoogle } from "../../assets/icons/IconGoogle";
 
 export const FormLogin = () => {
   const [showPassword, setShowPassword] = useState(false);

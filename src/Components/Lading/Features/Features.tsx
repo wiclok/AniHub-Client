@@ -1,11 +1,11 @@
-import styles from '../../../Assets/Style/Landing/Features/Features.module.css'
+import styles from '../../../assets/Style/Landing/Features/Features.module.css'
 import { FeaturesCard } from './FeaturesCard'
-import { IconCalendarWeek } from '../../../Assets/icons/IconCalendarWeek'
-import { IconPlayerPlay } from '../../../Assets/icons/IconPlayerPlay'
-import { IconMapPin } from '../../../Assets/icons/IconMapPin'
-import { IconTrendingUp } from '../../../Assets/icons/IconTrendingUp'
-import { IconUsers } from '../../../Assets/icons/IconUsers'
-import { IconStar } from '../../../Assets/icons/IconStar'
+import { IconCalendarWeek } from '../../../assets/icons/IconCalendarWeek'
+import { IconPlayerPlay } from '../../../assets/icons/IconPlayerPlay'
+import { IconMapPin } from '../../../assets/icons/IconMapPin'
+import { IconTrendingUp } from '../../../assets/icons/IconTrendingUp'
+import { IconUsers } from '../../../assets/icons/IconUsers'
+import { IconStar } from '../../../assets/icons/IconStar'
 
 export const Features = () => {
   return (

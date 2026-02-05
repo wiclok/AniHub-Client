@@ -1,4 +1,4 @@
-import styles from '../../Assets/Style/Landing/Footer.module.css'
+import styles from '../../assets/Style/Landing/Footer.module.css'
 
 export const Footer = () => {
   return (

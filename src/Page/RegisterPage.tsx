@@ -1,4 +1,4 @@
-import styles from "../Assets/Style/Register/RegisterPage.module.css";
+import styles from "../assets/Style/Register/RegisterPage.module.css";
 import { FormRegister } from "../Components/Register/FormRegister";
 
 export const RegisterPage = () => {

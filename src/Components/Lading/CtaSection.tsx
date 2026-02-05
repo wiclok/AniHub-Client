@@ -1,6 +1,6 @@
-import { IconArrowRight } from '../../Assets/icons/IconArrowRight'
-import { IconSparkles } from '../../Assets/icons/IconSparkles'
-import styles from '../../Assets/Style/Landing/CtaSection.module.css'
+import { IconArrowRight } from '../../assets/icons/IconArrowRight'
+import { IconSparkles } from '../../assets/icons/IconSparkles'
+import styles from '../../assets/Style/Landing/CtaSection.module.css'
 
 export const CtaSection = () => {
   return (

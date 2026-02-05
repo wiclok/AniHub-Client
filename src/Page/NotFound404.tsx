@@ -1,6 +1,6 @@
-import { IconGhost3 } from '../Assets/icons/IconGhost3'
-import { IconHome } from '../Assets/icons/IconHome'
-import styles from '../Assets/Style/NotFound404/NotFound404.module.css'
+import { IconGhost3 } from '../assets/icons/IconGhost3'
+import { IconHome } from '../assets/icons/IconHome'
+import styles from '../assets/Style/NotFound404/NotFound404.module.css'
 
 export const NotFound404 = () => {
   return (

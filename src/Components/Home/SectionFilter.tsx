@@ -1,5 +1,5 @@
-import { IconX } from "../../Assets/icons/IconX";
-import styles from "../../Assets/Style/Home/SectionFilter.module.css";
+import { IconX } from "../../assets/icons/IconX";
+import styles from "../../assets/Style/Home/SectionFilter.module.css";
 import type { AnimeFilters } from "../../types/anime";
 import { CustomSelect } from "../utils/CustomSelect";
 

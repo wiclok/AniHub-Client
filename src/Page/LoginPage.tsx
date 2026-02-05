@@ -1,4 +1,4 @@
-import styles from '../Assets/Style/Login/LoginPage.module.css'
+import styles from '../assets/Style/Login/LoginPage.module.css'
 import { FormLogin } from '../Components/Login/FormLogin';
 
 export const LoginPage = () => {

@@ -1,7 +1,7 @@
-import styles from '../../Assets/Style/Landing/Hero.module.css'
-import { IconSparkles } from  '../../Assets/icons/IconSparkles'
-import { IconBolt } from '../../Assets/icons/IconBolt'
-import { IconHeart } from '../../Assets/icons/IconHeart'
+import styles from '../../assets/Style/Landing/Hero.module.css'
+import { IconSparkles } from  '../../assets/icons/IconSparkles'
+import { IconBolt } from '../../assets/icons/IconBolt'
+import { IconHeart } from '../../assets/icons/IconHeart'
 import { useAuth } from '../../context/AuthContext'
 
 export const Hero = () => {
