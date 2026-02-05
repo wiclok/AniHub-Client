@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "../Assets/Style/Home/home.module.css";
+import styles from "../Assets/Style/Home/Home.module.css";
 import { Filter } from "../Components/Home/Filter";
 import { Hero } from "../Components/Home/Hero";
 import { Header } from "../Components/Lading/Header";
