@@ -76,7 +76,7 @@ export const FormLogin = () => {
     try {
       console.log(userData);
       const response = await CustomFetch(
-        "http://localhost:3000/auth/login",
+        `${import.meta.env.VITE_API_URL}/auth/login`,
         "POST",
         userData
       );
@@ -84,8 +84,12 @@ export const FormLogin = () => {
     navigate("/home");
 
       console.log("✅ Login exitoso:", response);
-    } catch (error: any) {
-      setServerError(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setServerError(error.message);
+      } else {
+        setServerError("An unexpected error occurred");
+      }
       setShowModal(true);
     }
   };
@@ -138,7 +142,7 @@ export const FormLogin = () => {
         <span>o</span>
       </div>
       <a
-        href="http://localhost:3000/auth/google"
+        href={`${import.meta.env.VITE_API_URL}/auth/google`}
         className={styles.googleButton}
       >
         <IconGoogle size={24}/>

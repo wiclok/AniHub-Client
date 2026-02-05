@@ -4,7 +4,7 @@ type Headers = Record<string, string>;
 export const CustomFetch = async (
   url: string,
   method: Method = 'GET',
-  payload?: any,
+  payload?: unknown,
   headers: Headers = {}
 ) => {
   const defaultHeaders: Headers = {

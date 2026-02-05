@@ -137,15 +137,19 @@ export const FormRegister = () => {
 
     try {
       const response = await CustomFetch(
-        "http://localhost:3000/auth/register",
+        `${import.meta.env.VITE_API_URL}/auth/register`,
         "POST",
         userData
       );
 
       console.log("✅ Usuario registrado:", response);
       setShowModal(true);
-    } catch (error: any) {
-      setServerError(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setServerError(error.message);
+      } else {
+        setServerError("An unexpected error occurred");
+      }
       setShowModal(true);
     }
   };
@@ -332,7 +336,7 @@ export const FormRegister = () => {
         <span>o</span>
       </div>
       <a
-        href="http://localhost:3000/auth/google"
+        href={`${import.meta.env.VITE_API_URL}/auth/google`}
         className={styles.googleButton}
       >
         <IconGoogle size={24}/>

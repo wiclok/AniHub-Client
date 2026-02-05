@@ -16,6 +16,12 @@
     "detect-css-reflows/composite": "off",
     "detect-css-reflows/paint": "off",
     "no-inline-styles": "off",
-    "button-type": "off"
+    "button-type": "off",
+    "axe/aria": [
+      "default",
+      {
+        "aria-valid-attr-value": "off"
+      }
+    ]
   }
 }

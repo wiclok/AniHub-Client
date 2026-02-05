@@ -25,3 +25,7 @@ dist-ssr
 
 # Git Hub
 .github
+
+# Environment variables
+.env
+.env.production

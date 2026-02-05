@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const refreshUser = async () => {
     try {
-      const response = await CustomFetch("http://localhost:3000/users/me", "GET");
+      const response = await CustomFetch(`${import.meta.env.VITE_API_URL}/users/me`, "GET"); // https://anihub-server.onrender.com
       setUser(response);
     } catch {
       setUser(null);
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = async () => {
     try {
-      await CustomFetch("http://localhost:3000/auth/logout", "POST");
+      await CustomFetch(`${import.meta.env.VITE_API_URL}/auth/logout`, "POST");
     } catch (error) {
       console.error('Error al hacer logout', error)
     } finally {
@@ -58,4 +58,5 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext);
