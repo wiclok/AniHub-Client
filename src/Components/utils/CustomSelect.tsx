@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import styles from "../../assets/Style/Home/CustomSelect.module.css";
+import styles from "../../assets/Style/Home/customSelect.module.css";
 
 type Option = {
   label: string;
