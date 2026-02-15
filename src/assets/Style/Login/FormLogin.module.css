@@ -252,6 +252,13 @@
   transform: scale(1.02);
 }
 
+.googleButton:disabled {
+  background-color: #e0e0e0;
+  color: #999;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .googleIcon {
   width: 22px;
   height: 22px;

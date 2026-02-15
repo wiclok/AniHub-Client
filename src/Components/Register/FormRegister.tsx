@@ -1,21 +1,39 @@
+// ===============================
+// IMPORTS
+// ===============================
 import styles from "../../assets/Style/Register/FormRegister.module.css";
 import { IconUser } from "../../assets/icons/IconUser";
 import { IconMail } from "../../assets/icons/IconMail";
 import { IconLock } from "../../assets/icons/IconLock";
 import { IconEye } from "../../assets/icons/IconEye";
-import { useState } from "react";
 import { IconEyeClosed } from "../../assets/icons/IconEyeClosed";
 import { IconExclamationCircle } from "../../assets/icons/IconExclamationCircle";
-import { CustomFetch } from "../../api/customFetch";
 import { IconGoogle } from "../../assets/icons/IconGoogle";
 
+import { useEffect, useRef, useState } from "react";
+import { CustomFetch } from "../../api/customFetch";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+
+// ===============================
+// COMPONENT
+// ===============================
 export const FormRegister = () => {
+
+  // ===============================
+  // UI STATES
+  // ===============================
   const [showPassword, setShowPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState<
     "veryWeak" | "weak" | "medium" | "strong" | ""
   >("");
-  const [passwordScore, setPasswordScore] = useState<number>(0);
+  const [passwordScore, setPasswordScore] = useState(0);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
+  // ===============================
+  // FORM STATE
+  // ===============================
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -24,6 +42,9 @@ export const FormRegister = () => {
     terms: false,
   });
 
+  // ===============================
+  // VALIDATION STATE
+  // ===============================
   const [errors, setErrors] = useState({
     name: "",
     email: "",
@@ -38,33 +59,56 @@ export const FormRegister = () => {
     confirmPassword: false,
   });
 
+  // ===============================
+  // SERVER STATE
+  // ===============================
   const [serverError, setServerError] = useState<string | null>(null);
-  const [showModal, setShowModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
+  // ===============================
+  // CONTEXT & NAVIGATION
+  // ===============================
+  const popupRef = useRef<Window | null>(null);
+  const navigate = useNavigate();
+  const { refreshUser } = useAuth();
+
+  // ===============================
+  // PASSWORD VISIBILITY
+  // ===============================
   const handlePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+    setShowPassword((prev) => !prev);
   };
 
+  // ===============================
+  // INPUT CHANGE
+  // ===============================
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, type, checked, value } = e.target;
     const newValue = type === "checkbox" ? checked : value;
 
-    setUserData({
-      ...userData,
+    setUserData((prev) => ({
+      ...prev,
       [name]: newValue,
-    });
+    }));
 
     if (type !== "checkbox") {
       validateField(name, value);
     }
   };
 
+  // ===============================
+  // BLUR
+  // ===============================
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name } = e.target;
     setTouched((prev) => ({ ...prev, [name]: true }));
     validateField(name, userData[name as keyof typeof userData] as string);
   };
 
+  // ===============================
+  // PASSWORD STRENGTH
+  // ===============================
   const evaluatePasswordStrength = (password: string) => {
     let strength = 0;
 
@@ -78,7 +122,7 @@ export const FormRegister = () => {
 
     if (strength <= 1) setPasswordStrength("veryWeak");
     else if (strength === 2) setPasswordStrength("weak");
-    else if (strength === 3 || strength === 4) setPasswordStrength("medium");
+    else if (strength <= 4) setPasswordStrength("medium");
     else if (strength === 5) setPasswordStrength("strong");
     else setPasswordStrength("");
   };
@@ -86,145 +130,169 @@ export const FormRegister = () => {
   const getStrengthColor = (score: number) => {
     if (score <= 1) return "#ff1a1a";
     if (score === 2) return "#ff4d4f";
-    if (score === 3 || score === 4) return "#ffa940";
+    if (score <= 4) return "#ffa940";
     if (score === 5) return "#52c41a";
     return "rgba(255,255,255,0.2)";
   };
 
+  // ===============================
+  // FIELD VALIDATION
+  // ===============================
   const validateField = (name: string, value: string) => {
     let error = "";
 
     switch (name) {
       case "name":
-        if (value.length <= 0) {
-          error = "El nombre de usuario es requerido";
-        } else if (value.length < 3) {
-          error = "Debe tener al menos 3 caracteres";
-        } else if (value.length > 20) {
+        if (!value) error = "El nombre es requerido";
+        else if (value.length < 3) error = "Debe tener al menos 3 caracteres";
+        else if (value.length > 20)
           error = "No puede tener más de 20 caracteres";
-        }
         break;
+
       case "email":
-        if (value.length <= 0) {
-          error = "El email es requerido";
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        if (!value) error = "El email es requerido";
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
           error = "Email inválido";
-        }
         break;
+
       case "password":
-        if (value.length <= 0) {
-          error = "La contraseña es requerida";
-        } else if (value.length < 8) {
+        if (!value) error = "La contraseña es requerida";
+        else if (value.length < 8)
           error = "Debe tener al menos 8 caracteres";
-        }
         evaluatePasswordStrength(value);
         break;
+
       case "confirmPassword":
-        if (value.length <= 0) {
+        if (!value)
           error = "La confirmación de contraseña es requerida";
-        } else if (value !== userData.password) {
+        else if (value !== userData.password)
           error = "Las contraseñas no coinciden";
-        }
         break;
     }
 
     setErrors((prev) => ({ ...prev, [name]: error }));
   };
 
+  // ===============================
+  // REGISTER NORMAL
+  // ===============================
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setServerError(null);
+    setLoading(true);
 
     try {
-      const response = await CustomFetch(
+      await CustomFetch(
         `${import.meta.env.VITE_API_URL}/auth/register`,
         "POST",
         userData
       );
 
-      console.log("✅ Usuario registrado:", response);
-      setShowModal(true);
+      setShowSuccessModal(true);
+
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        setServerError(error.message);
-      } else {
-        setServerError("An unexpected error occurred");
-      }
-      setShowModal(true);
+      setServerError(
+        error instanceof Error ? error.message : "Error inesperado"
+      );
+      setShowErrorModal(true);
+    } finally {
+      setLoading(false);
     }
   };
 
+  // ===============================
+  // GOOGLE REGISTER
+  // ===============================
+  const handleGoogleRegister = () => {
+    if (googleLoading) return;
+
+    setGoogleLoading(true);
+
+    popupRef.current = window.open(
+      `${import.meta.env.VITE_API_URL}/auth/google`,
+      "Google Register",
+      "width=500,height=600"
+    );
+
+    if (!popupRef.current) {
+      setGoogleLoading(false);
+      setServerError("No se pudo abrir el popup");
+      setShowErrorModal(true);
+    }
+  };
+
+  useEffect(() => {
+    const listener = async (event: MessageEvent) => {
+      if (event.origin !== import.meta.env.VITE_API_URL) return;
+      if (event.data !== "auth-success") return;
+
+      popupRef.current?.close();
+      popupRef.current = null;
+
+      setGoogleLoading(false);
+      await refreshUser();
+      navigate("/home");
+    };
+
+    window.addEventListener("message", listener);
+    return () => window.removeEventListener("message", listener);
+  }, [navigate, refreshUser]);
+
+  // ===============================
+  // RENDER
+  // ===============================
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      {/* Nombre de usuario */}
+      
+      {/* USERNAME */}
       <div className={styles.inputDiv}>
-        <label htmlFor="name">Nombre de usuario</label>
-        <div
-          className={`${styles.input} ${
-            touched.name && errors.name ? styles.inputError : ""
-          }`}
-        >
-          {touched.name && errors.name ? (
-            <IconUser color="red" className={styles.icon} />
-          ) : (
-            <IconUser className={styles.icon} />
-          )}
+        <label>Nombre de usuario</label>
+        <div className={`${styles.input} ${touched.name && errors.name ? styles.inputError : ""}`}>
+          <IconUser className={styles.icon} />
           <input
             type="text"
-            placeholder="otaku_arg"
-            id="name"
             name="name"
             value={userData.name}
             onChange={handleChange}
             onBlur={handleBlur}
           />
           {touched.name && errors.name && (
-            <IconExclamationCircle color="red" className={styles.iconError} />
+            <IconExclamationCircle color="red" className={styles.iconError}/>
           )}
         </div>
         {touched.name && errors.name && (
           <p className={styles.errorText}>{errors.name}</p>
         )}
       </div>
-      {/* Email */}
+
+      {/* EMAIL */}
       <div className={styles.inputDiv}>
-        <label htmlFor="email">Email</label>
-        <div
-          className={`${styles.input} ${
-            touched.email && errors.email ? styles.inputError : ""
-          }`}
-        >
-          {touched.email && errors.email ? (
-            <IconMail color="red" className={styles.icon} />
-          ) : (
-            <IconMail className={styles.icon} />
-          )}
+        <label>Email</label>
+        <div className={`${styles.input} ${touched.email && errors.email ? styles.inputError : ""}`}>
+          <IconMail className={styles.icon}/>
           <input
             type="text"
-            placeholder="tu@gmail.com"
-            id="email"
             name="email"
             value={userData.email}
             onChange={handleChange}
             onBlur={handleBlur}
           />
           {touched.email && errors.email && (
-            <IconExclamationCircle color="red" className={styles.iconError} />
+            <IconExclamationCircle color="red" className={styles.iconError}/>
           )}
         </div>
         {touched.email && errors.email && (
           <p className={styles.errorText}>{errors.email}</p>
         )}
       </div>
-      {/* Contraseña */}
+
+      {/* PASSWORD */}
       <div className={styles.inputDiv}>
-        <label htmlFor="password">Contraseña</label>
+        <label>Contraseña</label>
         <div className={styles.inputPassword}>
-          <IconLock className={styles.icon} />
+          <IconLock className={styles.icon}/>
           <input
             type={showPassword ? "text" : "password"}
-            placeholder="*********"
-            id="password"
             name="password"
             value={userData.password}
             onChange={handleChange}
@@ -235,21 +303,10 @@ export const FormRegister = () => {
           </div>
         </div>
 
-        {/* Texto y barra de fortaleza */}
         {userData.password.length > 0 && (
           <>
             {passwordStrength && (
-              <p
-                className={
-                  passwordStrength === "veryWeak"
-                    ? styles.veryWeak
-                    : passwordStrength === "weak"
-                    ? styles.weak
-                    : passwordStrength === "medium"
-                    ? styles.medium
-                    : styles.strong
-                }
-              >
+              <p>
                 Fortaleza:{" "}
                 {passwordStrength === "veryWeak"
                   ? "Muy débil"
@@ -262,20 +319,16 @@ export const FormRegister = () => {
             )}
 
             <div className={styles.strengthBar}>
-              {[0, 1, 2, 3, 4].map((idx) => {
+              {[0,1,2,3,4].map((idx) => {
                 const active = idx < passwordScore;
-                const color = active
-                  ? getStrengthColor(passwordScore)
-                  : "rgba(255,255,255,0.18)";
                 return (
                   <span
                     key={idx}
                     className={styles.barSegment}
                     style={{
-                      backgroundColor: color,
-                      transform: active ? "scaleY(1)" : "scaleY(0.9)",
-                      transition:
-                        "background-color 250ms ease, transform 200ms ease",
+                      backgroundColor: active
+                        ? getStrengthColor(passwordScore)
+                        : "rgba(255,255,255,0.18)",
                     }}
                   />
                 );
@@ -288,93 +341,94 @@ export const FormRegister = () => {
           <p className={styles.errorText}>{errors.password}</p>
         )}
       </div>
-      {/* Confirmar contraseña */}
+
+      {/* CONFIRM PASSWORD */}
       <div className={styles.inputDiv}>
-        <label htmlFor="passwordConfirm">Confirmar Contraseña</label>
-        <div
-          className={`${styles.input} ${
-            touched.confirmPassword && errors.confirmPassword
-              ? styles.inputError
-              : ""
-          }`}
-        >
-          <IconLock className={styles.icon} />
+        <label>Confirmar contraseña</label>
+        <div className={`${styles.input} ${touched.confirmPassword && errors.confirmPassword ? styles.inputError : ""}`}>
+          <IconLock className={styles.icon}/>
           <input
             type={showPassword ? "text" : "password"}
-            placeholder="*********"
-            id="passwordConfirm"
             name="confirmPassword"
             value={userData.confirmPassword}
             onChange={handleChange}
             onBlur={handleBlur}
           />
           {touched.confirmPassword && errors.confirmPassword && (
-            <IconExclamationCircle color="red" className={styles.iconError} />
+            <IconExclamationCircle color="red" className={styles.iconError}/>
           )}
         </div>
         {touched.confirmPassword && errors.confirmPassword && (
           <p className={styles.errorText}>{errors.confirmPassword}</p>
         )}
       </div>
-      {/* Términos */}
+
+      {/* TERMS */}
       <div className={styles.terms}>
-        <label htmlFor="terms">
+        <label>
           <input
             type="checkbox"
-            id="terms"
             name="terms"
             checked={userData.terms}
             onChange={handleChange}
           />
-          Acepto los <a href="#">términos y condiciones</a> y las{" "}
-          <a href="#">políticas de privacidad</a>
+          Acepto los términos y condiciones
         </label>
       </div>
-      <button type="submit">Registrarse</button>
-      {/* 🔹 Login con Google */}
-      <div className={styles.divider}>
-        <span>o</span>
-      </div>
-      <a
-        href={`${import.meta.env.VITE_API_URL}/auth/google`}
+
+      <button type="submit" disabled={loading}>
+        {loading ? "Registrando..." : "Registrarse"}
+      </button>
+
+      <div className={styles.divider}><span>o</span></div>
+
+      {/* GOOGLE */}
+      <button
+        type="button"
         className={styles.googleButton}
+        onClick={handleGoogleRegister}
+        disabled={googleLoading}
       >
         <IconGoogle size={24}/>
-        Continuar con Google
-      </a>
-      <span>
-        ¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a>
-      </span>
-      {showModal && (
-        <div
-          className={styles.modalOverlay}
-          onClick={() => setShowModal(false)}
-        >
-          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-            {serverError ? (
-              <>
-                <h2>Error en el registro</h2>
-                <ul className={styles.errorList}>
-                  {serverError?.split(",").map((msg, idx) => (
-                    <li key={idx}>{msg.trim()}</li>
-                  ))}
-                </ul>
-              </>
-            ) : (
-              <>
-                <h2>¡Registro exitoso! 🎉</h2>
-                <p>
-                  Te enviamos un correo de verificación. <br />
-                  Revisá tu bandeja de entrada y hacé clic en el botón
-                  <strong> “Verificar mi correo”</strong> para activar tu
-                  cuenta.
-                </p>
-              </>
-            )}
-            <button onClick={() => setShowModal(false)}>Cerrar</button>
+        {googleLoading ? "Cargando..." : "Continuar con Google"}
+      </button>
+
+      <p className={styles.loginLink}>
+        ¿Ya tienes cuenta? <a href="/login">Inicia sesión aquí</a>
+      </p>
+
+      {/* ERROR MODAL */}
+      {showErrorModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowErrorModal(false)}>
+          <div className={styles.modal} onClick={(e)=>e.stopPropagation()}>
+            <h2>Error</h2>
+            <p>{serverError}</p>
+            <button onClick={()=>setShowErrorModal(false)}>Cerrar</button>
           </div>
         </div>
       )}
+
+      {/* SUCCESS MODAL */}
+      {showSuccessModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowSuccessModal(false)}>
+          <div className={styles.modal} onClick={(e)=>e.stopPropagation()}>
+            <h2>Registro exitoso</h2>
+            <p>
+              Tu cuenta fue creada correctamente.
+              Revisa tu correo electrónico para verificar tu cuenta antes de iniciar sesión.
+            </p>
+            <button
+              onClick={() => {
+                setShowSuccessModal(false);
+                navigate("/login");
+              }}
+            >
+              Entendido
+            </button>
+          </div>
+        </div>
+      )}
+
     </form>
   );
 };
